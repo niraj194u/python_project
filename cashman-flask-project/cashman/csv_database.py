@@ -58,15 +58,15 @@ def get_data_by_id():
         return jsonify({"error": str(e)}), 500
 
 # Define a route to update data by ID
-@app.route('/gdp/<int:id>', methods=['PUT'])
-def update_data(id):
+@app.route('/gdp/data1', methods=['PUT'])
+def update_data():
     try:
         data = request.get_json()
         set_clause = ", ".join([f"{key} = '{value}'" for key, value in data.items()])
-        query = text(f"UPDATE gdp SET {set_clause} WHERE id = :id")
+        query = text(f"UPDATE gdp SET {set_clause} ")
         
         with engine.connect() as conn:
-            result = conn.execute(query, {"id": id})
+            result = conn.execute(query, )
         
         if result.rowcount == 0:
             return jsonify({"error": "Data not found"}), 404
